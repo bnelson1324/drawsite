@@ -1,22 +1,27 @@
+/* eslint-disable no-unused-vars */
+
 // set up atrament sketchpad
 const canvas = document.querySelector('#sketchpad');
-const atrament = new Atrament(canvas);
+const atrament = new Atrament(canvas); // eslint-disable-line no-undef
 
 // create step stack for undo/redo functionality
 class StepStack {
 	constructor() {
-		this.stack = {
-			head: {
-				prev: null
-			}
-		};
-
-		this.prevStep = this.stack.head;
+		this.init();
 	}
 
 	insertStepAfter(prevStep, newStep) {
 		prevStep.next = newStep;
 		newStep.prev = prevStep;
+	}
+
+	init() {
+		this.stack = {
+			head: {
+				prev: null,
+			},
+		};
+		this.prevStep = this.stack.head;
 	}
 }
 
@@ -26,7 +31,7 @@ atrament.recordStrokes = true;
 let reconstructMode = false;
 atrament.addEventListener('strokerecorded', ({ stroke }) => {
 	if (!reconstructMode) {
-		const newStep = { stroke: stroke }
+		const newStep = { stroke: stroke };
 		stepStack.insertStepAfter(stepStack.prevStep, newStep);
 		stepStack.prevStep = newStep;
 	}
@@ -36,14 +41,14 @@ atrament.addEventListener('strokerecorded', ({ stroke }) => {
 
 // undo and redo
 function undo() {
-	if(stepStack.prevStep && stepStack.prevStep.prev) {
+	if (stepStack.prevStep && stepStack.prevStep.prev) {
 		stepStack.prevStep = stepStack.prevStep.prev;
 	}
 	reconstructDrawing();
 }
 
 function redo() {
-	if(stepStack.prevStep && stepStack.prevStep.next) {
+	if (stepStack.prevStep && stepStack.prevStep.next) {
 		stepStack.prevStep = stepStack.prevStep.next;
 	}
 	reconstructDrawing();
@@ -51,7 +56,7 @@ function redo() {
 
 // reconstruct drawing from stepStack up to and including currentStep
 function reconstructDrawing() {
-	if(!stepStack.stack.head.next) {
+	if (!stepStack.stack.head.next) {
 		return;
 	}
 
@@ -64,13 +69,13 @@ function reconstructDrawing() {
 
 	// reconstruct drawing
 	for (let renderStep = stepStack.stack.head.next; renderStep != null && renderStep.prev != stepStack.prevStep; renderStep = renderStep.next) {
-		addStroke(renderStep.stroke)
+		addStroke(renderStep.stroke);
 	}
 
 	// restore drawing settings back to before reconstruct
 	atrament.mode = currMode;
 	atrament.color = currColor;
-	
+
 	reconstructMode = false;
 }
 
@@ -95,7 +100,7 @@ function addStroke(stroke) {
 // draw mode buttons
 function highlightButton(button) {
 	document.getElementById('highlighted').id = null;
-	button.id = "highlighted";
+	button.id = 'highlighted';
 }
 
 function setDrawMode(newMode) {
@@ -110,11 +115,26 @@ function updateColor() {
 }
 
 // clear
-function clear() {
-
+function clearCanvas() {
+	const confirmed = confirm('Are you sure you would like to clear the canvas?');
+	if (confirmed) {
+		atrament.clear();
+		stepStack.init();
+	}
 }
 
 // submit
-function submit() {
-
+function submitDrawing() {
+	const confirmed = confirm('Are you sure you would like to submit the drawing? Once submitted drawings cannot be changed.');
+	if (confirmed) {
+		// get picture as blob
+		canvas.toBlob((picBlob) => {
+			// send post request
+			const xhr = new XMLHttpRequest();
+			xhr.open('POST', '', false);
+			xhr.setRequestHeader('Content-Type', 'image/png');
+			xhr.send(picBlob);
+			console.log(xhr.response);
+		});
+	}
 }

@@ -1,4 +1,5 @@
 This project uses:
 express.js (MIT) https://www.npmjs.com/package/express
-atrament.js https://www.npmjs.com/package/atrament
+node-md5 (BSD-3) https://www.npmjs.com/package/md5
+atrament.js (DBAD) https://www.npmjs.com/package/atrament
 icons from https://flaticon.com
