@@ -8,12 +8,29 @@
 		canvas {
 			border: 2px solid black;
 		}
+		.controls {
+			text-align: center;
+			margin: 6px;
+		}
+		#highlighted {
+			background-color: #3ab58aa4;
+		}
 	</style>
   </head>
   <body>
 	<!-- Canvas controls -->
-	<button onclick="undo()">Undo</button>
-	<button onclick="redo()">Redo</button>
+	<div class="controls">
+		<button onclick="clear()">Clear</button>
+		<button onclick="submit()">Submit</button>
+	</div>
+	<div class="controls">
+		<button onclick="undo()">Undo</button>
+		<button onclick="redo()">Redo</button>
+	</div>
+	<div class="controls">
+		<button onclick="setDrawMode('draw'); highlightButton(this)" id="highlighted"><img src="icons/draw.png" style="max-width: 40px"></button>
+		<button onclick="setDrawMode('erase'); highlightButton(this)"><img src="icons/eraser.png" style="max-width: 40px"></button>
+	</div>
 	<!-- Canvas -->
 	<p align="center">
 		<canvas id="sketchpad" width="1280" height="720"></canvas>

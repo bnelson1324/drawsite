@@ -91,3 +91,23 @@ function addStroke(stroke) {
 	}
 	atrament.endStroke(prevPoint.x, prevPoint.y);
 }
+
+// draw mode buttons
+function highlightButton(button) {
+	document.getElementById('highlighted').id = null;
+	button.id = "highlighted";
+}
+
+function setDrawMode(newMode) {
+	atrament.mode = newMode;
+}
+
+// clear
+function clear() {
+
+}
+
+// submit
+function submit() {
+
+}
