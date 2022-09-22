@@ -28,6 +28,9 @@
 		<button onclick="redo()">Redo</button>
 	</div>
 	<div class="controls">
+		<label>Color: #</label><input id="colorSelector" onchange="updateColor()" value="000000" maxlength="6" style="width: 6em">
+		<div id="colorDisplay" style="width: 8px; height:8px; border: 2px solid black; display: inline-block; background-color: black"></div>
+	<div class="controls">
 		<button onclick="setDrawMode('draw'); highlightButton(this)" id="highlighted"><img src="icons/draw.png" style="max-width: 40px"></button>
 		<button onclick="setDrawMode('erase'); highlightButton(this)"><img src="icons/eraser.png" style="max-width: 40px"></button>
 	</div>

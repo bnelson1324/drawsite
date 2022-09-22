@@ -102,6 +102,13 @@ function setDrawMode(newMode) {
 	atrament.mode = newMode;
 }
 
+// change color
+function updateColor() {
+	const newColor = `#${document.getElementById('colorSelector').value}`;
+	atrament.color = newColor;
+	document.getElementById('colorDisplay').style.backgroundColor = newColor;
+}
+
 // clear
 function clear() {
 
