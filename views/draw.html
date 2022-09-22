@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Drawsite</title>
+    <link rel="stylesheet" href="style.css">
+	<script src="atrament.js"></script>
+	<style>
+		canvas {
+			border: 2px solid black;
+		}
+	</style>
+  </head>
+  <body>
+	<!-- Canvas controls -->
+	
+
+	<!-- Canvas -->
+	<p align="center">
+		<canvas id="sketchpad" width="1280" height="720"></canvas>
+	</p>
+	<script>
+		const canvas = document.querySelector('#sketchpad');
+		const sketchpad = new Atrament(canvas);
+	</script>
+  </body>
+</html>
