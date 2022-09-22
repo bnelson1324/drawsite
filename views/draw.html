@@ -3,8 +3,7 @@
   <head>
     <meta charset="UTF-8">
     <title>Drawsite</title>
-    <link rel="stylesheet" href="style.css">
-	<script src="atrament.js"></script>
+	<script src="atramentSrc.js"></script>
 	<style>
 		canvas {
 			border: 2px solid black;
@@ -13,15 +12,12 @@
   </head>
   <body>
 	<!-- Canvas controls -->
-	
-
+	<button onclick="undo()">Undo</button>
+	<button onclick="redo()">Redo</button>
 	<!-- Canvas -->
 	<p align="center">
 		<canvas id="sketchpad" width="1280" height="720"></canvas>
 	</p>
-	<script>
-		const canvas = document.querySelector('#sketchpad');
-		const sketchpad = new Atrament(canvas);
-	</script>
+	<script src="sketchpad.js"></script>
   </body>
 </html>
