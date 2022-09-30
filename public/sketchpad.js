@@ -128,13 +128,19 @@ function submitDrawing() {
 	const confirmed = confirm('Are you sure you would like to submit the drawing? Once submitted drawings cannot be changed.');
 	if (confirmed) {
 		// get picture as blob
-		canvas.toBlob((picBlob) => {
+		canvas.toBlob((pngBlob) => {
 			// send post request
 			const xhr = new XMLHttpRequest();
 			xhr.open('POST', '', false);
 			xhr.setRequestHeader('Content-Type', 'image/png');
-			xhr.send(picBlob);
-			console.log(xhr.response);
+			xhr.send(pngBlob);
+
+			if (xhr.status === 200) {
+				window.location.href = xhr.responseText;
+			} else {
+				// alert user of response
+				alert(`${xhr.status} ${xhr.statusText}: ${xhr.responseText}`);
+			}
 		});
 	}
 }

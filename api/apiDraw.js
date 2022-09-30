@@ -7,8 +7,18 @@ const router = express.Router();
 router.route('/')
 	.get((req, res) => res.sendFile(path.join(__dirname, '../pages/draw.html')))
 	.post(async (req, res) => {
-		await dao.addImage(req.body);
-		res.send('Image received');
+		try {
+			const imageId = await dao.addImage(req.body);
+			const redirectURL = path.join('../img', imageId.toString());
+			res.status(200).send(redirectURL);
+		} catch (e) {
+			if (e.code === 'EEXIST') {
+				res.status(400).send('This image has already been submitted');
+			} else {
+				console.error(e);
+				res.status(500).send('Server error. Image not submitted');
+			}
+		}
 	});
 
 module.exports = router;

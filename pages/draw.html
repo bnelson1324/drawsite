@@ -5,11 +5,13 @@
     <title>Drawsite</title>
 	<script src="atramentSrc.js"></script>
 	<style>
+		* {
+			text-align: center
+		}
 		canvas {
 			border: 2px solid black;
 		}
 		.controls {
-			text-align: center;
 			margin: 6px;
 		}
 		#highlighted {
@@ -20,12 +22,10 @@
   <body>
 	<!-- Canvas controls -->
 	<div class="controls">
-		<button onclick="clearCanvas()">Clear</button>
-		<button onclick="submitDrawing()">Submit</button>
-	</div>
-	<div class="controls">
 		<button onclick="undo()">Undo</button>
 		<button onclick="redo()">Redo</button>
+		<button onclick="clearCanvas()">Clear</button>
+		<button onclick="submitDrawing()">Submit</button>
 	</div>
 	<div class="controls">
 		<label>Color: #</label><input id="colorSelector" onchange="updateColor()" value="000000" maxlength="6" style="width: 6em">
