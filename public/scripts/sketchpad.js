@@ -136,7 +136,7 @@ function submitDrawing() {
 			xhr.send(pngBlob);
 
 			if (xhr.status === 200) {
-				window.location.href = xhr.responseText;
+				window.location.href = '/';
 			} else {
 				// alert user of response
 				alert(`${xhr.status} ${xhr.statusText}: ${xhr.responseText}`);

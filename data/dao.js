@@ -32,10 +32,6 @@ async function addImage(pngBlob) {
 		INSERT INTO images (filename, timestamp)
 		VALUES (?, UNIXEPOCH());
 	`, (fileName));
-
-	// return id of image just submitted
-	const imageId = (await db.get('SELECT LAST_INSERT_ROWID() AS lastId FROM images')).lastId;
-	return imageId;
 }
 
 async function getImages(startId, imageCount) {

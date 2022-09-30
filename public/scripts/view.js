@@ -9,7 +9,6 @@ function loadPage(pageNum) {
 	xhrTableData.open('GET', 'tableData', false);
 	xhrTableData.send();
 	const totalImages = JSON.parse(xhrTableData.responseText).totalImages;
-	console.log(totalImages);
 
 	// get image data
 	const startId = totalImages - ((pageNum - 1) * IMAGES_PER_PAGE);
@@ -31,18 +30,20 @@ function loadPage(pageNum) {
 }
 
 function addImage(imgData) {
+	const filePath = `userImages/${imgData.filename}`;
+
 	// container
 	const newImgSpan = document.createElement('span');
 	newImgSpan.className = 'userImageContainer';
 
 	// link
 	const link = document.createElement('a');
-	link.href = `img/${imgData.id}`;
+	link.href = filePath;
 	newImgSpan.appendChild(link);
 
 	// image
 	const img = document.createElement('img');
-	img.src = `userImages/${imgData.filename}`;
+	img.src = filePath;
 	img.className = 'userImage';
 	img.alt = imgData.filename;
 	link.appendChild(img);
