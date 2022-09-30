@@ -38,7 +38,9 @@ function loadPage(pageNum) {
 			break;
 		}
 	}
-	addButton(totalPageCount);
+	if(totalPageCount !== 1) {
+		addButton(totalPageCount);
+	}
 }
 
 function addImage(imgData) {

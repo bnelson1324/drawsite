@@ -5,12 +5,20 @@ const { open } = require('sqlite');
 const md5 = require('md5');
 
 module.exports = {
-	loadDB, addImage, getImages, getTableData,
+	loadDB: loadData, addImage, getImages, getTableData,
 };
+
+const USER_IMAGES_FOLDER = path.join(__dirname, '../public/userImages');
 
 let db;
 
-async function loadDB() {
+async function loadData() {
+	// create user images folder if it doesn't already exist
+	if (!fs.existsSync(USER_IMAGES_FOLDER)) {
+		await fs.promises.mkDir(USER_IMAGES_FOLDER);
+	}
+
+	// load DB
 	db = await open({
 		filename: path.join(__dirname, '../db.sqlite'),
 		driver: sqlite3.Database,
@@ -23,7 +31,7 @@ async function loadDB() {
 // save image and store information in database
 async function addImage(pngBlob) {
 	const fileName = `${md5(pngBlob)}.png`;
-	const filePath = path.join(__dirname, '../public/userImages', `${fileName}`);
+	const filePath = path.join(USER_IMAGES_FOLDER, `${fileName}`);
 
 	// write image file. throw error if file already exists
 	await fs.promises.writeFile(filePath, pngBlob, { encoding: 'base64', flag: 'wx' });
