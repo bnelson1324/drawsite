@@ -4,6 +4,13 @@
 		<meta charset="UTF-8">
 		<title>Drawsite</title>
 		<style>
+			h1 {
+				text-align: center;
+			}
+			p {
+				margin: 3px;
+				text-align: center;
+			}
 			.userImageContainer {
 				display: inline-block;
 				border: 2px solid black;
@@ -14,12 +21,8 @@
 				border-bottom: 2px solid black;
 				margin: 0px
 			}
-			p {
-				margin: 3px;
-				text-align: center;
-			}
-			h1 {
-				text-align: center;
+			.pageButton {
+				margin: 2px;
 			}
 		</style>
 	</head>
@@ -27,6 +30,10 @@
 		<h1>View Images</h1>
 
 		<div id="imageDisplay" align="center"></div>
+
+		<br>
+		<p>Page</p>
+		<div id="pageButtons" align="center"></div>
 
 		<script src="scripts/view.js"></script>
 	</body>

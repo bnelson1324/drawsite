@@ -1,7 +1,9 @@
 /* eslint-disable no-unused-vars */
 
 const IMAGES_PER_PAGE = 6;
+const PAGE_BUTTON_MAX_COUNT = 6;
 const imageDisplay = document.getElementById('imageDisplay');
+const pageButtons = document.getElementById('pageButtons');
 
 function loadPage(pageNum) {
 	// get table data
@@ -24,9 +26,19 @@ function loadPage(pageNum) {
 		addImage(data);
 	}
 
-	// update page count
-	const pageCount = Math.ceil(totalImages / IMAGES_PER_PAGE);
-	// todo
+	// update page nav buttons
+	pageButtons.innerHTML = '';
+	const totalPageCount = Math.ceil(totalImages / IMAGES_PER_PAGE);
+	// add buttons for first page, last page, and some pages between
+	addButton(1);
+	for (let i = 2; i <= PAGE_BUTTON_MAX_COUNT - 2; i++) {
+		if (i < totalPageCount) {
+			addButton(i);
+		} else {
+			break;
+		}
+	}
+	addButton(totalPageCount);
 }
 
 function addImage(imgData) {
@@ -55,4 +67,12 @@ function addImage(imgData) {
 	newImgSpan.appendChild(txt);
 
 	imageDisplay.appendChild(newImgSpan);
+}
+
+function addButton(pageNum) {
+	const btn = document.createElement('button');
+	btn.textContent = pageNum;
+	btn.addEventListener('click', () => loadPage(pageNum));
+	btn.className = 'pageButton';
+	pageButtons.appendChild(btn);
 }
