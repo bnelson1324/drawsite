@@ -5,7 +5,7 @@ const { open } = require('sqlite');
 const md5 = require('md5');
 
 module.exports = {
-	loadDB, addImage,
+	loadDB, addImage, getImages,
 };
 
 let db;
@@ -29,11 +29,23 @@ async function addImage(pngBlob) {
 	await fs.promises.writeFile(filePath, pngBlob, { encoding: 'base64', flag: 'wx' });
 
 	await db.run(`
-		INSERT INTO images (path, timestamp)
+		INSERT INTO images (filename, timestamp)
 		VALUES (?, UNIXEPOCH());
 	`, (fileName));
 
 	// return id of image just submitted
 	const imageId = (await db.get('SELECT LAST_INSERT_ROWID() AS lastId FROM images')).lastId;
 	return imageId;
+}
+
+async function getImages(startId, imageCount) {
+	return {
+		imagesData: await db.all(`
+			SELECT id, filename, timestamp
+			FROM images
+			WHERE id >= ?
+			LIMIT ?;
+		`, startId, imageCount),
+		tableData: await db.get('SELECT COUNT(id) as totalImages FROM images;'),
+	};
 }
