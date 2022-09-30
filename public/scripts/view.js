@@ -51,6 +51,7 @@ function addImage(imgData) {
 	// link
 	const link = document.createElement('a');
 	link.href = filePath;
+	link.target = '_blank';
 	newImgSpan.appendChild(link);
 
 	// image

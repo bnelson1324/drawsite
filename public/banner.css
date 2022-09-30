@@ -1,0 +1,10 @@
+#banner {
+	margin-bottom: 12px;
+}
+
+#banner > * {
+	text-align: center;
+	margin-left: 20px;
+	margin-right: 20px;
+	font-size: 24px;
+}
