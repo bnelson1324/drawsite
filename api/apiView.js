@@ -1,6 +1,6 @@
 const express = require('express');
 const path = require('path');
-const getImages = require('../data/dao.js').getImages;
+const dao = require('../data/dao.js');
 
 const router = express.Router();
 
@@ -9,7 +9,11 @@ router.route('/').get(async (req, res) => {
 });
 
 router.route('/imagesData').get(async (req, res) => {
-	res.json(await getImages(req.query.startId || 0, req.query.imageCount || 20));
+	res.json(await dao.getImages(req.query.startId || 0, req.query.imageCount || 20));
+});
+
+router.route('/tableData').get(async (req, res) => {
+	res.json(await dao.getTableData());
 });
 
 module.exports = router;

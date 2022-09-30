@@ -4,23 +4,29 @@ const IMAGES_PER_PAGE = 6;
 const imageDisplay = document.getElementById('imageDisplay');
 
 function loadPage(pageNum) {
-	const startId = (pageNum - 1) * IMAGES_PER_PAGE;
+	// get table data
+	const xhrTableData = new XMLHttpRequest();
+	xhrTableData.open('GET', 'tableData', false);
+	xhrTableData.send();
+	const totalImages = JSON.parse(xhrTableData.responseText).totalImages;
+	console.log(totalImages);
 
-	// get data
-	const xhr = new XMLHttpRequest();
+	// get image data
+	const startId = totalImages - ((pageNum - 1) * IMAGES_PER_PAGE);
+	const xhrImages = new XMLHttpRequest();
 	const url = `imagesData?startId=${startId}&imageCount=${IMAGES_PER_PAGE}`;
-	xhr.open('GET', url, false);
-	xhr.send();
-	const data = JSON.parse(xhr.responseText);
+	xhrImages.open('GET', url, false);
+	xhrImages.send();
+	const imgData = JSON.parse(xhrImages.responseText);
 
 	// display images on page
 	imageDisplay.innerHTML = '';
-	for (const imgData of data.imagesData) {
-		addImage(imgData);
+	for (const data of imgData) {
+		addImage(data);
 	}
 
 	// update page count
-	const pageCount = Math.ceil(data.tableData.totalImages / IMAGES_PER_PAGE);
+	const pageCount = Math.ceil(totalImages / IMAGES_PER_PAGE);
 	// todo
 }
 

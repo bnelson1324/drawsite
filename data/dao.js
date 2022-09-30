@@ -5,7 +5,7 @@ const { open } = require('sqlite');
 const md5 = require('md5');
 
 module.exports = {
-	loadDB, addImage, getImages,
+	loadDB, addImage, getImages, getTableData,
 };
 
 let db;
@@ -39,13 +39,15 @@ async function addImage(pngBlob) {
 }
 
 async function getImages(startId, imageCount) {
-	return {
-		imagesData: await db.all(`
+	return await db.all(`
 			SELECT id, filename, timestamp
 			FROM images
-			WHERE id >= ?
+			WHERE id <= ?
+			ORDER BY id DESC
 			LIMIT ?;
-		`, startId, imageCount),
-		tableData: await db.get('SELECT COUNT(id) as totalImages FROM images;'),
-	};
+		`, startId, imageCount);
+}
+
+async function getTableData() {
+	return await db.get('SELECT COUNT(id) as totalImages FROM images;');
 }
