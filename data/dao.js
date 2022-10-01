@@ -15,7 +15,7 @@ let db;
 async function loadData() {
 	// create user images folder if it doesn't already exist
 	if (!fs.existsSync(USER_IMAGES_FOLDER)) {
-		await fs.promises.mkDir(USER_IMAGES_FOLDER);
+		await fs.promises.mkdir(USER_IMAGES_FOLDER);
 	}
 
 	// load DB
