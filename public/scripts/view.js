@@ -38,7 +38,7 @@ function loadPage(pageNum) {
 			break;
 		}
 	}
-	if (totalPageCount !== 1) {
+	if (totalPageCount > 1) {
 		addButton(totalPageCount);
 	}
 }
