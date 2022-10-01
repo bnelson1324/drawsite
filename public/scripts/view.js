@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 
 const IMAGES_PER_PAGE = 6;
-const PAGE_BUTTON_MAX_COUNT = 6;
+const PAGE_BUTTON_MAX_COUNT = 7;
 const imageDisplay = document.getElementById('imageDisplay');
 const pageButtons = document.getElementById('pageButtons');
 
@@ -30,16 +30,28 @@ function loadPage(pageNum) {
 	pageButtons.innerHTML = '';
 	const totalPageCount = Math.ceil(totalImages / IMAGES_PER_PAGE);
 	// add buttons for first page, last page, and some pages between
-	addButton(1);
-	for (let i = 2; i <= PAGE_BUTTON_MAX_COUNT - 2; i++) {
-		if (i < totalPageCount) {
-			addButton(i);
-		} else {
-			break;
+	const pageBtnsToAdd = [1];
+	let numBtnsAdded = 1;
+	if (totalPageCount > 1) {
+		pageBtnsToAdd.push(totalPageCount);
+		numBtnsAdded++;
+	}
+
+	function tryAddNum(num) {
+		if (num > 1 && num < totalPageCount && numBtnsAdded < PAGE_BUTTON_MAX_COUNT) {
+			pageBtnsToAdd.push(num);
+			numBtnsAdded++;
 		}
 	}
-	if (totalPageCount > 1) {
-		addButton(totalPageCount);
+
+	tryAddNum(pageNum);
+	for (let i = 1; i < totalPageCount; i++) {
+		tryAddNum(pageNum - i);
+		tryAddNum(pageNum + i);
+	}
+
+	for (const pgNum of pageBtnsToAdd.sort((a, b) => parseInt(a) - parseInt(b))) {
+		addButton(pgNum, pageNum);
 	}
 }
 
@@ -72,10 +84,14 @@ function addImage(imgData) {
 	imageDisplay.appendChild(newImgSpan);
 }
 
-function addButton(pageNum) {
+function addButton(pageNum, currentPage) {
 	const btn = document.createElement('button');
 	btn.textContent = pageNum;
 	btn.addEventListener('click', () => loadPage(pageNum));
 	btn.className = 'pageButton';
+	if (pageNum === currentPage) {
+		btn.id = 'highlighted';
+	}
+
 	pageButtons.appendChild(btn);
 }
